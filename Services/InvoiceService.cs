@@ -71,7 +71,7 @@ namespace Services
                     Invoice = newInvoice,
                     UnitPrice = product.UnitPrice,
                     Amount = detail.Amount,
-                    SubTotal = detail.Amount * product.UnitPrice
+                    SubTotal = Math.Round(detail.Amount * product.UnitPrice, 2)
 
                 };
 
@@ -82,9 +82,9 @@ namespace Services
             double iva = subTotal * 0.12;
             double total = subTotal + iva;
 
-            newInvoice.SubTotal = subTotal;
-            newInvoice.IVA = iva;
-            newInvoice.Total = total;
+            newInvoice.SubTotal = Math.Round(subTotal, 2);
+            newInvoice.IVA = Math.Round(iva, 2);
+            newInvoice.Total = Math.Round(total,2);
 
             await _repository.CreateAsync(newInvoice);
 
