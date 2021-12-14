@@ -11,6 +11,8 @@ namespace Services
 
         Task<ICollection<InvoiceResponseDto>> GetAll();
 
-        Task<InvoiceResponseDto> FindByNumberAsync(string number);
+        Task<ICollection<InvoiceResponseDto>> FindByNumberAsync(string number);
+
+        Task<InvoiceResponseDto> GetAsync(int id);
     }
 }

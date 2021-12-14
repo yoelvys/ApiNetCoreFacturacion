@@ -10,6 +10,8 @@ namespace DataAccess.Repositories
 
         Task<ICollection<Invoice>> GetAll();
 
-        Task<Invoice> FindByNumberAsync(string number);
+        Task<ICollection<Invoice>> FindByNumberAsync(string number);
+
+        Task<Invoice> GetAsync(int id);
     }
 }

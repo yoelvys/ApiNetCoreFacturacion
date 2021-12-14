@@ -33,12 +33,22 @@ namespace DataAccess.Repositories
                 .ToListAsync();
         }
 
-        public async Task<Invoice> FindByNumberAsync(string number)
+        public async Task<ICollection<Invoice>> FindByNumberAsync(string number)
         {
             return await _context.Set<Invoice>()
                 .Include(i => i.Client)
                 .Include(i => i.Details)
-                .Where(i => i.Number == number).SingleOrDefaultAsync();
+                .Where(i => i.Number.Contains(number))
+                .ToListAsync();
+        }
+
+        public async Task<Invoice> GetAsync(int id)
+        {
+            return await _context.Set<Invoice>()
+                .Include(i => i.Client)
+                .Include(i => i.Details)
+                .Where(i => i.Id == id)
+                .SingleOrDefaultAsync();
         }
     }
 }

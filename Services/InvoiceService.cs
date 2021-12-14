@@ -23,6 +23,15 @@ namespace Services
             _productRepository = productRepository;
         }
 
+        public async Task<InvoiceResponseDto> GetAsync(int id)
+        {
+            var invoice = await _repository.GetAsync(id);
+            if (invoice == null)
+                return null;
+
+            return TransformToResponseDto(invoice);
+        }
+
         public async Task<InvoiceResponseDto> CreateAsync(InvoiceRequestDto invoice)
         {
             ClientRequestDto clientRequest = invoice.ClientRequest;
@@ -88,14 +97,11 @@ namespace Services
             return  invoices.Select(i => TransformToResponseDto(i)).ToList();
         }
 
-        public async Task<InvoiceResponseDto> FindByNumberAsync(string number)
+        public async Task<ICollection<InvoiceResponseDto>> FindByNumberAsync(string number)
         {
-            Invoice invoice = await _repository.FindByNumberAsync(number);
+            ICollection<Invoice> invoices = await _repository.FindByNumberAsync(number);
 
-            if(invoice == null)
-                return null;
-
-            return TransformToResponseDto(invoice);
+            return invoices.Select(i => TransformToResponseDto(i)).ToList();
         }
 
         private static InvoiceResponseDto TransformToResponseDto(Invoice invoice)

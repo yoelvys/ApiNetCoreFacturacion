@@ -28,21 +28,28 @@ namespace FacturacionBackend.Controllers
         }
 
         [HttpGet]
-        [Route("{number}")]
+        [Route("number/{number}")]
         public async Task<IActionResult> FindByNumber(string number)
         {
-            InvoiceResponseDto invoice = await _service.FindByNumberAsync(number);
-
-            if (invoice == null)
-                return NotFound();
-
-            return Ok(invoice);
+            return Ok(await _service.FindByNumberAsync(number));
         }
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
             return Ok(await _service.GetAll());
+        }
+
+        [HttpGet]
+        [Route("{id:int}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            InvoiceResponseDto invoice = await _service.GetAsync(id);
+
+            if(invoice == null)
+                return NotFound();
+
+            return Ok(invoice);
         }
     }
 }
